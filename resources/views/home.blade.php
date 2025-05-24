@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Óptica Vision</title>
+  <title>OftalClass</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
@@ -79,10 +79,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link text-primary" href="#indicacoes">Indicações</a>
+            <a class="nav-link text-primary" href="/indicacoes">Indicações</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-orange text-white ms-2" href="#login">Login</a>
+            <a class="nav-link btn btn-orange text-white ms-2" href="/login">Login</a>
           </li>
         </ul>
       </div>
@@ -93,7 +93,7 @@
     <div class="container">
       <h1>Encontre seus Óculos Ideais</h1>
       <p class="lead">Estilo e conforto para sua visão.</p>
-      <img src="{{ asset('img/logo_1.png')}}" alt="Óculos" class="img-fluid">
+      <img src="{{ asset('img/logo.png')}}" alt="Óculos" class="img-fluid">
     </div>
   </section>
 

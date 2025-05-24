@@ -1,0 +1,51 @@
+.main-sidebar {
+    width: 260px;
+    background-color: #F4F6F9 !important; 
+    color: #383F45 !important;
+}
+
+.sidebar-mini .main-sidebar .nav-link{
+    color: #383F45 !important;
+    width: 260px;
+    background-color: #F4F6F9 !important; 
+}
+
+.nav-sidebar .nav-treeview .nav-link {
+    padding-left: 40px !important;
+    white-space: nowrap;       /* Impede quebra de linha */
+    overflow: hidden;          /* Esconde o texto que ultrapassa */
+}
+
+.nav-sidebar .nav-item.menu-open > .nav-link {
+    background-color: #F4F6F9 !important;
+    white-space: nowrap;  
+    color: #383F45 !important;
+}
+
+.nav-sidebar .nav-item > .nav-link:hover {
+    background-color: #F4F6F9 !important;
+    white-space: nowrap;  
+}
+
+.nav-sidebar .nav-item > .nav-link.active {
+    background-color: #F4F6F9 !important;
+    white-space: nowrap;  
+    color: inherit !important;
+    font-weight: normal;
+}
+  
+/* Remove a borda do lado esquerdo (se existir) */
+.nav-sidebar .nav-item > .nav-link.active::before {
+    background-color: #F4F6F9 !important;
+    white-space: nowrap;  
+    content: none;
+}
+
+.nav-sidebar .nav-item > .nav-link.active {
+    background-color: #F4F6F9 !important;
+    white-space: nowrap;  
+    font-weight: bold;
+    color: #383F45 !important;
+} 
+
+/* #383F45 */
