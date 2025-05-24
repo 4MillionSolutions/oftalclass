@@ -38,11 +38,19 @@ class IndicacoesController extends Controller
         	$indicacoes = $indicacoes->where('nome', 'like', '%'.$request->input('nome').'%');
         }
 
+        $logged_user = \Auth::user();
+        $logged_user_id = $logged_user->id;
+        $logged_user_name = $logged_user->name;
+        $codigo_indicacao = $logged_user_id;
+        $url_do_site = env('APP_URL');
+
         $indicacoes = $indicacoes->get();
         $tela = 'pesquisa';
     	$data = array(
 				'tela' => $tela,
                 'nome_tela' => 'indicações',
+                'link' => $url_do_site.'/indicacoes/'.$logged_user_name.'/'.$logged_user_id,
+                'codigo_indicacao' => $codigo_indicacao,
 				'indicacoes'=> $indicacoes,
 				'request' => $request,
 				'rotaIncluir' => 'incluir-indicacoes',
@@ -59,40 +67,7 @@ class IndicacoesController extends Controller
      */
     public function incluir(Request $request)
     {
-        $metodo = $request->method();
-
-    	if ($metodo == 'POST') {
-
-    		$indicacoes_id = $this->salva($request);
-
-	    	return redirect()->route('indicacoes', [ 'id' => $indicacoes_id ] );
-
-    	}
-
-        $logged_user = \Auth::user();
-        $logged_user_id = $logged_user->id;
-        $logged_user_name = $logged_user->name;
-
-        $codigo_indicacao = $logged_user_id;
-
-        $url_do_site = env('APP_URL');
-
-        $tela = 'incluir';
-    	$data = array(
-				'tela' => $tela,
-                // url do link com um código gerado pelo nome e id do usuário
-                'link' => $url_do_site.'/indicacoes/'.$logged_user_name.'/'.$logged_user_id,
-                'codigo_indicacao' => $codigo_indicacao,
-                'nome_tela' => 'indicações',
-				'request' => $request,
-				'rotaIncluir' => 'incluir-indicacoes',
-				'rotaAlterar' => 'alterar-indicacoes'
-			);
-
-
-
-
-        return view('indicacoes', $data);
+        
     }
 
      /**
@@ -102,32 +77,7 @@ class IndicacoesController extends Controller
      */
     public function alterar(Request $request)
     {
-
-        $indicacoes = new Indicacoes();
-
-
-        $indicacoes= $indicacoes->where('id', '=', $request->input('id'))->get();
-
-		$metodo = $request->method();
-		if ($metodo == 'POST') {
-
-    		$indicacoes_id = $this->salva($request);
-
-	    	return redirect()->route('indicacoes', [ 'id' => $indicacoes_id ] );
-
-    	}
-
-                $tela = 'alterar';
-    	$data = array(
-				'tela' => $tela,
-                'nome_tela' => 'indicações',
-        		'indicacoes'=> $indicacoes,
-				'request' => $request,
-				'rotaIncluir' => 'incluir-indicacoes',
-				'rotaAlterar' => 'alterar-indicacoes'
-			);
-
-        return view('indicacoes', $data);
+        
     }
 
     public function salva($request) {
