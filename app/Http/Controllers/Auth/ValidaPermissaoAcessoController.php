@@ -7,6 +7,7 @@ use App\Models\PerfilSubmenus;
 use App\Models\Perfis;
 use App\Models\SubMenus;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ValidaPermissaoAcessoController extends Controller
 {
@@ -28,7 +29,7 @@ class ValidaPermissaoAcessoController extends Controller
 
     public function GetSubMenuLiberado($path = '') {
 
-        $user = \Auth::user();
+        $user = Auth::user();
         if(empty($user)){
             return redirect()->route('login');
         }
@@ -47,8 +48,6 @@ class ValidaPermissaoAcessoController extends Controller
                        ->select('submenu_id')
                        ->where('perfil_id', '=', $perfil);
         if($path != '') {
-            // dd($path);
-
             $subMenus = $subMenus->where('rota', '=', $this->fixPath($path))->first();
             $perfis_menu = $perfis_menu->where('submenu_id', '=', $subMenus->id);
         }

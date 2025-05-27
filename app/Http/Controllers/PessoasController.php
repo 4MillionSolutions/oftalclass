@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Pessoas;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class PessoasController extends Controller
@@ -17,8 +17,8 @@ class PessoasController extends Controller
     {
         $id = !empty($request->input('id')) ? ($request->input('id')) : ( !empty($id) ? $id : false );
 
-        $pessoas = new Pessoas();
-        
+        $pessoas = new User();
+
         if ($id) {
             $pessoas = $pessoas->where('id', '=', $id);
         }
@@ -37,13 +37,13 @@ class PessoasController extends Controller
         if (!empty($request->input('nome'))) {
             $pessoas = $pessoas->where('nome', 'like', '%'.$request->input('nome').'%');
         }
-        
+
         $pessoas = $pessoas->get();
         $tela = 'pesquisa';
         $data = array(
             'tela' => $tela,
             'nome_tela' => 'pessoas',
-            'estados' => collect($this->getEstados())->toBase(),            
+            'estados' => collect($this->getEstados())->toBase(),
             'pessoas'=> $pessoas,
             'request' => $request,
             'rotaIncluir' => 'incluir-pessoas',
@@ -68,7 +68,7 @@ class PessoasController extends Controller
         $data = array(
             'tela' => $tela,
             'nome_tela' => 'pessoas',
-            'estados' => collect($this->getEstados())->toBase(),  
+            'estados' => collect($this->getEstados())->toBase(),
             'request' => $request,
             'rotaIncluir' => 'incluir-pessoas',
             'rotaAlterar' => 'alterar-pessoas'
@@ -79,7 +79,7 @@ class PessoasController extends Controller
 
     public function alterar(Request $request)
     {
-        $pessoas = new Pessoas();
+        $pessoas = new User();
         $paciente = $pessoas->where('id', '=', $request->input('id'))->get();
 
         $metodo = $request->method();
@@ -94,7 +94,7 @@ class PessoasController extends Controller
             'tela' => $tela,
             'nome_tela' => 'pessoas',
             'pessoas'=> $paciente,
-            'estados' => collect($this->getEstados())->toBase(),  
+            'estados' => collect($this->getEstados())->toBase(),
             'request' => $request,
             'rotaIncluir' => 'incluir-pessoas',
             'rotaAlterar' => 'alterar-pessoas'
@@ -108,7 +108,7 @@ class PessoasController extends Controller
         $pessoas = pessoas::where('documento', $documento)->first();
 
         if (!$pessoas) {
-            $pessoas = new Pessoas();
+            $pessoas = new User();
         }
 
         // Associar o paciente à clínica selecionada na sessão
@@ -121,7 +121,7 @@ class PessoasController extends Controller
         $pessoas->nome = $request->input('nome');
         $pessoas->telefone = preg_replace("/[^0-9]/", "", $request->input('telefone'));
         $pessoas->documento = $documento;
-        $pessoas->data_nascimento = $request->input('data_nascimento');  
+        $pessoas->data_nascimento = $request->input('data_nascimento');
         $pessoas->genero = $request->input('genero');
         $pessoas->estado_civil = $request->input('estado_civil');
         $pessoas->numero = $request->input('numero');
@@ -133,7 +133,7 @@ class PessoasController extends Controller
         $pessoas->cidade = $request->input('cidade');
         $pessoas->email = $request->input('email');
         $pessoas->status = $request->input('status');
-        
+
         $pessoas->save();
 
         return $pessoas->id;
@@ -143,108 +143,108 @@ class PessoasController extends Controller
        return [
             ['id' =>1,
             'sigla'=>'AC',
-             'estado'=>'Acre', 
+             'estado'=>'Acre',
        ],
             ['id' =>2,
             'sigla'=>'AL',
-             'estado'=>'Alagoas', 
+             'estado'=>'Alagoas',
        ],
             ['id' =>3,
             'sigla'=>'AP',
-             'estado'=>'Amapá', 
+             'estado'=>'Amapá',
        ],
             ['id' =>4,
             'sigla'=>'AM',
-             'estado'=>'Amazonas', 
+             'estado'=>'Amazonas',
        ],
             ['id' =>5,
             'sigla'=>'BA',
-             'estado'=>'Bahia', 
+             'estado'=>'Bahia',
        ],
             ['id' =>6,
             'sigla'=>'CE',
-             'estado'=>'Ceará', 
+             'estado'=>'Ceará',
        ],
             ['id' =>7,
             'sigla'=>'DF',
-             'estado'=>'Distrito Federal', 
+             'estado'=>'Distrito Federal',
        ],
             ['id' =>8,
             'sigla'=>'ES',
-             'estado'=>'Espírito Santo', 
+             'estado'=>'Espírito Santo',
        ],
             ['id' =>9,
             'sigla'=>'GO',
-             'estado'=>'Goiás', 
+             'estado'=>'Goiás',
        ],
             ['id' =>10,
             'sigla'=>'MA',
-             'estado'=>'Maranhão', 
+             'estado'=>'Maranhão',
        ],
        [
             'id' =>11,
             'sigla'=>'MT',
-             'estado'=>'Mato Grosso', 
+             'estado'=>'Mato Grosso',
        ],
             ['id' =>12,
             'sigla'=>'MS',
-             'estado'=>'Mato Grosso do Sul', 
+             'estado'=>'Mato Grosso do Sul',
        ],
             ['id' =>13,
             'sigla'=>'MG',
-             'estado'=>'Minas Gerais', 
+             'estado'=>'Minas Gerais',
        ],
             ['id' =>14,
             'sigla'=>'PA',
-             'estado'=>'Pará', 
+             'estado'=>'Pará',
        ],
             ['id' =>15,
             'sigla'=>'PB',
-             'estado'=>'Paraíba', 
+             'estado'=>'Paraíba',
        ],
             ['id' =>16,
             'sigla'=>'PR',
-             'estado'=>'Paraná', 
+             'estado'=>'Paraná',
        ],
             ['id' =>17,
             'sigla'=>'PE',
-             'estado'=>'Pernambuco', 
+             'estado'=>'Pernambuco',
        ],
             ['id' =>18,
             'sigla'=>'PI',
-             'estado'=>'Piauí', 
+             'estado'=>'Piauí',
        ],
             ['id' =>19,
             'sigla'=>'RJ',
-             'estado'=>'Rio de Janeiro', 
+             'estado'=>'Rio de Janeiro',
        ],
             ['id' =>20,
             'sigla'=>'RN',
-             'estado'=>'Rio Grande do Norte', 
+             'estado'=>'Rio Grande do Norte',
        ],
             ['id' =>21,
             'sigla'=>'RS',
-             'estado'=>'Rio Grande do Sul', 
+             'estado'=>'Rio Grande do Sul',
        ],
             ['id' =>22,
             'sigla'=>'RO',
-             'estado'=>'Rondônia', 
+             'estado'=>'Rondônia',
        ],
             ['id' =>23,
             'sigla'=>'RR',
-             'estado'=>'Roraima', 
+             'estado'=>'Roraima',
        ],
             ['id' =>24,
             'sigla'=>'SC',
-             'estado'=>'Santa Catarina', 
+             'estado'=>'Santa Catarina',
        ],
             ['id' =>25,
             'sigla'=>'SP',
-             'estado'=>'São Paulo', 
+             'estado'=>'São Paulo',
        ],
             ['id' =>26,
             'sigla'=>'SE',
-             'estado'=>'Sergipe', 
+             'estado'=>'Sergipe',
        ],
            [  'id' =>27,
            'sigla'=>'TO',
@@ -253,10 +253,10 @@ class PessoasController extends Controller
         ];
     }
 
-    public function getAllPessoas() {
-        $pessoas = new Pessoas();
+    public function getAllUser() {
+        $pessoas = new User();
         $query = $pessoas->where('status', '=', 'A');
-        
+
         return $query->get();
     }
 }

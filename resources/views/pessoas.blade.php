@@ -18,7 +18,7 @@
 
 @stop
 
-@section('adminlte_css')    
+@section('adminlte_css')
     <link rel="stylesheet" href="{{ asset('css/adminlte-custom.css') }}">
 @stop
 
@@ -30,9 +30,9 @@
 @extends('layouts.extra-content')
 @if(isset($tela) and $tela == 'pesquisa')
     <div class="right_col" role="main">
-        <form id="filtro" action="pacientes" method="get" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+        <form id="filtro" action="pessoas" method="get" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
             <div class="form-group row">
-                <label for="nome" class="col-sm-2 col-form-label">Nome paciente</label>
+                <label for="nome" class="col-sm-2 col-form-label">Nome pessoa</label>
                 <div class="col-sm-3">
                     <input type="text" id="nome" name="nome" class="form-control" value="{{ $request->input('nome') ?? '' }}">
                 </div>
@@ -69,23 +69,23 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Paciente</th>
+                      <th>Nome</th>
                       <th>Telefone</th>
                       <th>Email</th>
                       <th>Nascimento</th>
-                      <th>Atendimento</th>
+                      <th>Manutenção</th>
                     </tr>
                   </thead>
                   <tbody>
                   @if(isset($pessoas))
-                        @foreach ($pessoas as $paciente)
+                        @foreach ($pessoas as $pessoa)
                             <tr>
-                            <th scope="row" title="Editar paciente"><a href={{ URL::route($rotaAlterar, array('id' => $paciente->id )) }}>{{$paciente->id}}</a></th>
-                              <td>{{$paciente->nome}}</td>
-                              <td class='mask_phone'>{{$paciente->telefone}}</td>
-                              <td>{{$paciente->email}}</td>
-                              <td>{{\Carbon\Carbon::parse($paciente->data_nascimento)->format('d/m/Y')}}</td>
-                              <td title="Ir para atendimentos"><a href={{ URL::route('alterar-atendimentos', array('id' => $paciente->id )) }}><i class="fa fa-clipboard"></i></a></td>
+                            <th scope="row" title="Editar pessoa"><a href={{ URL::route($rotaAlterar, array('id' => $pessoa->id )) }}>{{$pessoa->id}}</a></th>
+                              <td>{{$pessoa->name}}</td>
+                              <td class='mask_phone'>{{$pessoa->telefone}}</td>
+                              <td>{{$pessoa->email}}</td>
+                              <td>{{\Carbon\Carbon::parse($pessoa->data_nascimento)->format('d/m/Y')}}</td>
+                              <td title="Ir para atendimentos"><a href={{ URL::route('alterar-pessoas', array('id' => $pessoa->id )) }}><i class="fa fa-clipboard"></i></a></td>
                             </tr>
                         @endforeach
                     @endif
@@ -103,7 +103,7 @@
         <div class="container">
             <div class="row row-cols-md-3 g-3">
                 <div class="col-md-4">
-                    <label for="paciente" class="form-label">Nome*</label>
+                    <label for="pessoa" class="form-label">Nome*</label>
                     <input type="text" class="form-control" id="nome" name="nome" maxlength="200" required value="{{ $pessoas[0]->nome ?? '' }}">
                 </div>
                 <div class="col-md-4">
@@ -116,27 +116,27 @@
                     <input type="text" class="form-control mask_phone" id="telefone" name="telefone" maxlength="11" value="{{ $pessoas[0]->telefone ?? '' }}">
                 </div>
             </div>
-            <div class="row row-cols-md-3 g-3 mt-2">                
+            <div class="row row-cols-md-3 g-3 mt-2">
                 <div class="col-md-2">
                     <label for="data_nascimento" class="form-label">Data de Nascimento</label>
                     <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" value="{{ $pessoas[0]->data_nascimento ?? '' }}">
-                </div>                
+                </div>
                 <div class="col-md-2">
                     <label for="genero" class="form-label">Gênero</label>
                     <select class="form-control" id="genero" name="genero">
                         <option value="0" {{ isset($pessoas[0]->genero) && $pessoas[0]->genero == '0' ? 'selected' : '' }}>Masculino</option>
                         <option value="1" {{ isset($pessoas[0]->genero) && $pessoas[0]->genero == '1' ? 'selected' : '' }}>Feminino</option>
-                        <option value="2" {{ isset($pessoas[0]->genero) && $pessoas[0]->genero == '2' ? 'selected' : '' }}>Outro</option>        
+                        <option value="2" {{ isset($pessoas[0]->genero) && $pessoas[0]->genero == '2' ? 'selected' : '' }}>Outro</option>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" maxlength="200" placeholder="Digite um email válido" value="{{ $pessoas[0]->email ?? '' }}">
-                </div>                
-                        
+                </div>
+
             </div>
 
-            <div class="row row-cols-md-3 g-3 mt-2">                     
+            <div class="row row-cols-md-3 g-3 mt-2">
                 <div class="col-md-4">
                     <label for="estado_civil" class="form-label">Estado civil</label>
                     <select class="form-control" id="estado_civil" name="estado_civil">
@@ -147,13 +147,13 @@
                         <option value="4" {{ isset($pessoas[0]->estado_civil) && $pessoas[0]->estado_civil == '4' ? 'selected' : '' }}>Separado(a)</option>
                         <option value="5" {{ isset($pessoas[0]->estado_civil) && $pessoas[0]->estado_civil == '5' ? 'selected' : '' }}>União Estável</option>
                         <option value="6" {{ isset($pessoas[0]->estado_civil) && $pessoas[0]->estado_civil == '6' ? 'selected' : '' }}>Outros</option>
-                    </select> 
-                    
-                </div>                          
+                    </select>
+
+                </div>
             </div>
 
             <div class="row row-cols-md-3 g-3 mt-2">
-                
+
                 <div class="col-md-8">
                     <label for="endereco" class="form-label">Endereço</label>
                     <input type="text" class="form-control " id="endereco" name="endereco" maxlength="500" value="{{ $pessoas[0]->endereco ?? '' }}">
@@ -186,13 +186,13 @@
                             <option value="{{ $estado['id'] }}" {{ isset($pessoas[0]->estado) && $pessoas[0]->estado == $estado['id'] ? 'selected' : '' }}>{{ $estado['estado'] }}</option>
                         @endforeach
                     </select>
-                </div>      
+                </div>
                 <div class="col-md-4">
                     <label for="cep" class="form-label">CEP</label>
                     <input type="text" class="form-control cep" id="cep" name="cep" maxlength="8" value="{{ $pessoas[0]->cep ?? '' }}">
                 </div>
-            </div>      
-            
+            </div>
+
             <div class="row mt-1">
                 <div class="col-md-2">
                     <label for="status" class="form-label">Status</label>

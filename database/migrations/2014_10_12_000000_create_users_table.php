@@ -20,9 +20,21 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->integer('perfil_acesso')->default(3);
+            $table->integer('perfil_acesso')->default(2);
             $table->date('plan_expiration_date')->nullable();
             $table->string('status')->default('A');
+            $table->string('documento', 14)->nullable();
+            $table->string('chave_pix', 200)->unique()->nullable();;
+            $table->string('telefone', 15)->nullable();
+            $table->date('data_nascimento')->nullable();
+            $table->integer('genero')->nullable();
+            $table->string('endereco', 500)->nullable();
+            $table->string('numero', 50)->nullable();
+            $table->string('bairro', 100)->nullable();
+            $table->string('cidade', 150)->nullable();
+            $table->integer('estado')->nullable();
+            $table->string('cep', 9)->nullable();
+            $table->string('complemento', 100)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -37,12 +49,25 @@ return new class extends Migration
             ],
             [
                 'id' => 2,
-                'name' => 'Admin 2',
-                'email' => 'admin2@admin.com',
-                'perfil_acesso' => 1,
+                'name' => 'Pessoa 2',
+                'email' => 'pessoa2@admin.com',
+                'perfil_acesso' => 2,
+                'password' => '$2y$10$W8aQ3AC1YCe4lg0bvio1AOQkBK4xRjLyeH0SvxkyqZcFFhjVq9Gxi'
+            ],
+            [
+                'id' => 3,
+                'name' => 'Pessoa 3',
+                'email' => 'pessoa3@admin.com',
+                'perfil_acesso' => 2,
+                'password' => '$2y$10$W8aQ3AC1YCe4lg0bvio1AOQkBK4xRjLyeH0SvxkyqZcFFhjVq9Gxi'
+            ],
+            [
+                'id' => 4,
+                'name' => 'Pessoa 4',
+                'email' => 'pessoa4@admin.com',
+                'perfil_acesso' => 2,
                 'password' => '$2y$10$W8aQ3AC1YCe4lg0bvio1AOQkBK4xRjLyeH0SvxkyqZcFFhjVq9Gxi'
             ]
-
     ]);
     }
 

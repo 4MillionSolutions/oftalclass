@@ -17,13 +17,21 @@ return new class extends Migration
         // Tabela de indicacoes principais
         Schema::create('indicacoes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pessoa_id')->constrained('pessoas')->onDelete('cascade');
-            $table->foreignId('indicacao_id')->constrained('pessoas')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('status_indicacao_id')->constrained('status_indicacao')->onDelete('cascade');
-            $table->string('link')->nullable();
-            $table->string('ativo', 1)->default('A');
+            $table->float('valor')->default(0);
+            $table->string('status', 1)->default('A');
             $table->timestamps();
         });
+
+        DB::table('indicacoes')->insert(
+            [
+                ['id' => 1, 'user_id' => 1, 'status_indicacao_id' => 1, 'valor' => 10.00, 'status' => 'A'],
+                ['id' => 2, 'user_id' => 2, 'status_indicacao_id' => 2, 'valor' => 20.00, 'status' => 'A'],
+                ['id' => 3, 'user_id' => 3, 'status_indicacao_id' => 1, 'valor' => 15.00, 'status' => 'A'],
+                ['id' => 4, 'user_id' => 1, 'status_indicacao_id' => 2, 'valor' => 30.00, 'status' => 'A'],
+            ]
+        );
 
     }
 

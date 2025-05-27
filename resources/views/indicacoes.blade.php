@@ -60,14 +60,39 @@
 
             <table class="table table-striped text-center">
                 <thead>
-                    <tr>
-                        <th>ID</th>
+                    <tr>                        
+                        <th>Data</th>
                         <th>Nome</th>
                         <th>Valor</th>
-                        <th>Data</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                            <td>{{'01/01/2025'}}</td>
+                            <td>{{'André'}}</td>
+                            <td>{{'R$ 10,00'}}</td>
+                            <td>{{'Resgatado'}}</td>
+                    </tr>
+                    <tr>
+                            <td>{{'02/02/2025'}}</td>
+                            <td>{{'Maria'}}</td>
+                            <td>{{'R$ 10,00'}}</td>
+                            <td>{{'pendente'}}</td>
+                    </tr>
+                    <tr>
+                            <td>{{'01/04/2025'}}</td>
+                            <td>{{'Claudia'}}</td>
+                            <td>{{'R$ 10,00'}}</td>
+                            <td>{{'Resgatado'}}</td>
+                    </tr>
+                    <tr>
+                            <td>{{'20/05/2025'}}</td>
+                            <td>{{'José Antônio'}}</td>
+                            <td>{{'R$ 10,00'}}</td>
+                            <td>{{'Pendente'}}</td>
+                    </tr>
+
                 @if(isset($indicacoes))
                         @foreach ($indicacoes as $indicacao)
                             <tr>

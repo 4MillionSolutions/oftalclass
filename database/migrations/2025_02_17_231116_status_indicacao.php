@@ -23,7 +23,7 @@ return new class extends Migration
 
         DB::table('status_indicacao')->insert(
             [
-                ['id' => 1, 'nome' => 'pendente', 'status' => 'A'],
+                ['id' => 1, 'nome' => 'Pendente', 'status' => 'A'],
                 ['id' => 2, 'nome' => 'Pago', 'status' => 'A'],
             ]
         );
