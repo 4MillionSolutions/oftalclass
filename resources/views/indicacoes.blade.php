@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Pro Effect')
+@section('title', 'OftalClass')
 
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script src="js/jquery.mask.js"></script>
@@ -9,7 +9,7 @@
 <script src="js/main_custom.js"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-@section('adminlte_css')    
+@section('adminlte_css')
     <link rel="stylesheet" href="{{ asset('css/adminlte-custom.css') }}">
 @stop
 
@@ -21,9 +21,6 @@
     @section('content_header')
     <div class="form-group row">
         <h1 class="m-0 text-dark col-sm-11 col-form-label">Indicações OftalClass</h1>
-        <div class="col-sm-1">
-            @include('layouts.nav-open-incluir', ['rotaIncluir => $rotaIncluir'])
-        </div>
     </div>
     @stop
     @section('content')
@@ -32,13 +29,13 @@
 
         @csrf <!--{{ csrf_field() }}-->
             <div class="form-group row">
-                <label for="link" class="col-sm-2 col-form-label">Link de indicação</label>
+                <label for="link" class="col-sm-2 col-form-label  text-right">Link de indicação</label>
                 <div class="col-sm-6">
                     <input type="text" id="link" name="link" class="form-control col-md-7 col-xs-12" readonly="true" value="@if (isset($link)){{$link}}@else{{''}}@endif">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="codigo_indicacao" class="col-sm-2 col-form-label">Código de indicação</label>
+                <label for="codigo_indicacao" class="col-sm-2 col-form-label  text-right">Código de indicação</label>
                 <div class="col-sm-6">
                     <input type="text" id="codigo_indicacao" name="codigo_indicacao" class="form-control col-md-7 col-xs-12" readonly="true" value="@if (isset($codigo_indicacao)){{$codigo_indicacao}}@else{{''}}@endif">
                 </div>
@@ -46,7 +43,7 @@
 
             <!-- botão para compartichar o link por whatsApp -->
             <div class="form-group row">
-                <label for="compartilhar" class="col-sm-2 col-form-label">Compartilhe com seu amigos e familiares</label>
+                <label for="compartilhar" class="col-sm-2 col-form-label text-right">Compartilhe com seu amigos e familiares</label>
                 <div class="col-sm-6">
                     <button type="button" class="btn btn-success" id="compartilhar" onclick="compartilharLink()">
                         <i class="fas fa-share"></i> Compartilhar
@@ -60,7 +57,7 @@
 
             <table class="table table-striped text-center">
                 <thead>
-                    <tr>                        
+                    <tr>
                         <th>Data</th>
                         <th>Nome</th>
                         <th>Valor</th>
@@ -68,37 +65,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                            <td>{{'01/01/2025'}}</td>
-                            <td>{{'André'}}</td>
-                            <td>{{'R$ 10,00'}}</td>
-                            <td>{{'Resgatado'}}</td>
-                    </tr>
-                    <tr>
-                            <td>{{'02/02/2025'}}</td>
-                            <td>{{'Maria'}}</td>
-                            <td>{{'R$ 10,00'}}</td>
-                            <td>{{'pendente'}}</td>
-                    </tr>
-                    <tr>
-                            <td>{{'01/04/2025'}}</td>
-                            <td>{{'Claudia'}}</td>
-                            <td>{{'R$ 10,00'}}</td>
-                            <td>{{'Resgatado'}}</td>
-                    </tr>
-                    <tr>
-                            <td>{{'20/05/2025'}}</td>
-                            <td>{{'José Antônio'}}</td>
-                            <td>{{'R$ 10,00'}}</td>
-                            <td>{{'Pendente'}}</td>
-                    </tr>
-
-                @if(isset($indicacoes))
+                    @if(isset($indicacoes))
                         @foreach ($indicacoes as $indicacao)
                             <tr>
-                            <th scope="row"><a href={{ URL::route($rotaAlterar, array('id' => $indicacao->id )) }}>{{$indicacao->id}}</a></th>
-                              <td>{{$indicacao->id}}</td>
-                              </tr>
+                                <th scope="row">
+                                    {{ $indicacao->created_at->format('d/m/Y') }}
+                                </th>
+                                <td>{{$indicacao->user_name}}</td>
+                                <td>{{ number_format($indicacao->valor, 2, ',', '.') }}</td>
+                                <td>{{$indicacao->status_nome}}</td>
+                            </tr>
                         @endforeach
                     @endif
                 </tbody>
@@ -107,6 +83,6 @@
     @stop
 @else
 @section('content')
-        
+
     @stop
 @endif

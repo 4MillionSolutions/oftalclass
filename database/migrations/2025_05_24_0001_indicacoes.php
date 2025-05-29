@@ -19,17 +19,21 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('status_indicacao_id')->constrained('status_indicacao')->onDelete('cascade');
+            $table->string('codigo_indicacao', 10);
             $table->float('valor')->default(0);
             $table->string('status', 1)->default('A');
+            $table->string('observacao')->nullable();
             $table->timestamps();
         });
 
         DB::table('indicacoes')->insert(
             [
-                ['id' => 1, 'user_id' => 1, 'status_indicacao_id' => 1, 'valor' => 10.00, 'status' => 'A'],
-                ['id' => 2, 'user_id' => 2, 'status_indicacao_id' => 2, 'valor' => 20.00, 'status' => 'A'],
-                ['id' => 3, 'user_id' => 3, 'status_indicacao_id' => 1, 'valor' => 15.00, 'status' => 'A'],
-                ['id' => 4, 'user_id' => 1, 'status_indicacao_id' => 2, 'valor' => 30.00, 'status' => 'A'],
+                [ 'user_id' => 1, 'status_indicacao_id' => 2, 'codigo_indicacao' => 1, 'valor' => 10.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
+                [ 'user_id' => 1, 'status_indicacao_id' => 1, 'codigo_indicacao' => 1, 'valor' => 5.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
+                [ 'user_id' => 1, 'status_indicacao_id' => 1, 'codigo_indicacao' => 1, 'valor' => 15.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
+                [ 'user_id' => 2, 'status_indicacao_id' => 2, 'codigo_indicacao' => 2, 'valor' => 20.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
+                [ 'user_id' => 3, 'status_indicacao_id' => 1, 'codigo_indicacao' => 3, 'valor' => 15.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
+                [ 'user_id' => 1, 'status_indicacao_id' => 2, 'codigo_indicacao' => 4, 'valor' => 30.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
             ]
         );
 

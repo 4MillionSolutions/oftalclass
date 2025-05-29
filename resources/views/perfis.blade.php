@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Pro Effect')
+@section('title', 'OftalClass')
 
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script src="js/jquery.mask.js"></script>
@@ -9,7 +9,7 @@
 <script src="js/main_custom.js"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-@section('adminlte_css')    
+@section('adminlte_css')
     <link rel="stylesheet" href="{{ asset('css/adminlte-custom.css') }}">
 @stop
 
@@ -32,15 +32,15 @@
 
         <form id="filtro" action="perfis" method="get" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
             <div class="form-group row">
-                <label for="id" class="col-sm-1 col-form-label">Código</label>
+                <label for="id" class="col-sm-1 col-form-label text-right">Código</label>
                 <div class="col-sm-2">
                     <input type="text" id="id" name="id" class="form-control" value="@if (isset($request) && $request->input('id') != ''){{$request->input('id')}}@else @endif">
                 </div>
-                <label for="nome" class="col-sm-1 col-form-label">Nome</label>
+                <label for="nome" class="col-sm-1 col-form-label text-right">Nome</label>
                 <div class="col-sm-3">
                     <input type="text" id="nome" name="nome" class="form-control" value="@if (isset($request) && trim($request->input('nome')) != ''){{$request->input('nome')}}@else @endif">
                 </div>
-                <label for="status" class="col-sm-1 col-form-label">Situação</label>
+                <label for="status" class="col-sm-1 col-form-label text-right">Situação</label>
                 <select class="form-control col-md-1" id="status" name="status">
                     <option value="A" @if (isset($request) && $request->input('status') == 'A'){{ ' selected '}}@else @endif>Ativo</option>
                     <option value="I" @if (isset($request) && $request->input('status')  == 'I'){{ ' selected '}}@else @endif>Inativo</option>
@@ -96,7 +96,7 @@
             @stop
             <form id="alterar" action="{{$rotaAlterar}}" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" method="post">
             <div class="form-group row">
-                <label for="codigo" class="col-sm-2 col-form-label">Id</label>
+                <label for="codigo" class="col-sm-2 col-form-label  text-right">Id</label>
                 <div class="col-sm-2">
                 <input type="text" id="id" name="id" class="form-control col-md-7 col-xs-12" readonly="true" value="@if (isset($perfis[0]->id)){{$perfis[0]->id}}@else{{''}}@endif">
                 </div>
@@ -109,7 +109,7 @@
         @endif
             @csrf <!--{{ csrf_field() }}-->
             <div class="form-group row">
-                <label for="nome" class="col-sm-2 col-form-label">Nome</label>
+                <label for="nome" class="col-sm-2 col-form-label  text-right">Nome</label>
                 <div class="col-sm-6">
                 <input type="text" class="form-control" id="nome"  name="nome" value="@if (isset($perfis[0]->nome)){{$perfis[0]->nome}}@else{{''}}@endif">
                 </div>
@@ -117,7 +117,7 @@
 
             <div class="form-group row">
                 <div class="col-sm-6">
-                    <label for="tela" class="col-sm-2 col-form-label">Permissão de Telas</label>
+                    <label for="tela" class="col-sm-2 col-form-label ">Permissão de Telas</label>
                     <div class="col-sm-6">
                         @foreach ($telas as $tela)
                             <div class="form-check row">
@@ -126,7 +126,7 @@
                             </div>
                         @endforeach
                     </div>
-                </div>                
+                </div>
             </div>
 
                 <label for="status" class="col-sm-2 col-form-label"></label>

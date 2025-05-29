@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Collection;
 
 class PessoasController extends Controller
 {
@@ -58,11 +57,9 @@ class PessoasController extends Controller
         $metodo = $request->method();
 
         if ($metodo == 'POST') {
-            $paciente_id = $this->salva($request);
-            return redirect()->route('pessoas', [ 'id' => $paciente_id ] );
+            $pessoas_id = $this->salva($request);
+            return redirect()->route('pessoas', [ 'id' => $pessoas_id ] );
         }
-
-        // dd(collect($this->getEstados())->toBase());
 
         $tela = 'incluir';
         $data = array(
@@ -80,20 +77,21 @@ class PessoasController extends Controller
     public function alterar(Request $request)
     {
         $pessoas = new User();
-        $paciente = $pessoas->where('id', '=', $request->input('id'))->get();
+        $pessoas = $pessoas->where('id', '=', $request->input('id'));
 
         $metodo = $request->method();
         if ($metodo == 'POST') {
-            $paciente_id = $this->salva($request);
-            return redirect()->route('pessoas', [ 'id' => $paciente_id ] );
+            $pessoas_id = $this->salva($request);
+            return redirect()->route('pessoas', [ 'id' => $pessoas_id ] );
         }
 
-
+        $pessoas = $pessoas->get();
+        // dd($pessoas);
         $tela = 'alterar';
         $data = array(
             'tela' => $tela,
             'nome_tela' => 'pessoas',
-            'pessoas'=> $paciente,
+            'pessoas'=> $pessoas,
             'estados' => collect($this->getEstados())->toBase(),
             'request' => $request,
             'rotaIncluir' => 'incluir-pessoas',
@@ -104,26 +102,30 @@ class PessoasController extends Controller
     }
 
     public function salva($request) {
+
+
         $documento = preg_replace("/[^0-9]/", "", $request->input('documento'));
-        $pessoas = pessoas::where('documento', $documento)->first();
+        if($request->input('id')) {
+
+            $pessoas = User::where('id', $request->input('id'))->first();
+        }
 
         if (!$pessoas) {
             $pessoas = new User();
         }
 
-        // Associar o paciente à clínica selecionada na sessão
+        // Associar o pessoas à clínica selecionada na sessão
         $clinica_id = session('clinica_id');
         if ($clinica_id) {
             $pessoas->clinica_id = $clinica_id;
         }
 
 
-        $pessoas->nome = $request->input('nome');
+        $pessoas->name = $request->input('nome');
         $pessoas->telefone = preg_replace("/[^0-9]/", "", $request->input('telefone'));
         $pessoas->documento = $documento;
         $pessoas->data_nascimento = $request->input('data_nascimento');
         $pessoas->genero = $request->input('genero');
-        $pessoas->estado_civil = $request->input('estado_civil');
         $pessoas->numero = $request->input('numero');
         $pessoas->complemento = $request->input('complemento');
         $pessoas->telefone = preg_replace("/[^0-9]/", "", $request->input('telefone'));
@@ -132,7 +134,9 @@ class PessoasController extends Controller
         $pessoas->bairro = $request->input('bairro');
         $pessoas->cidade = $request->input('cidade');
         $pessoas->email = $request->input('email');
+        $pessoas->estado = $request->input('estado');
         $pessoas->status = $request->input('status');
+        $pessoas->chave_pix = $request->input('chave_pix');
 
         $pessoas->save();
 

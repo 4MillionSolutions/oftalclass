@@ -63,8 +63,8 @@ class IndicacoesControleController extends Controller
                 'nome_tela' => 'indicações',
              	'indicacoes'=> $indicacoes,
 				'request' => $request,
-				'rotaIncluir' => 'incluir-indicacoes',
-				'rotaAlterar' => 'alterar-indicacoes'
+				'rotaIncluir' => 'incluir-indicacoes-controle',
+				'rotaAlterar' => 'alterar-indicacoes-controle'
 			);
 
         return view('indicacoes-controle', $data);
@@ -87,7 +87,28 @@ class IndicacoesControleController extends Controller
      */
     public function alterar(Request $request)
     {
+        $indicacoes = new Indicacoes();
 
+        if($request->input('id')) {
+            $indicacoes = $indicacoes::find($request->input('id'));
+        }
+        $indicacoes = $indicacoes->join('users', 'indicacoes.user_id', '=', 'users.id')
+            ->join('status_indicacao', 'indicacoes.status_indicacao_id', '=', 'status_indicacao.id')
+            ->select('indicacoes.*', 'users.name as user_name', 'users.id as user_id', 'status_indicacao.nome as status_nome')
+            ->where('indicacoes.id', '=', $request->input('id'))
+            ->first();
+
+        // dd($indicacoes);
+    	$data = array(
+                'tela' => 'alterar',
+                'nome_tela' => 'indicações',
+                'indicacoes'=> $indicacoes,
+                'request' => $request,
+				'rotaIncluir' => 'incluir-indicacoes-controle',
+				'rotaAlterar' => 'alterar-indicacoes-controle'
+            );
+
+        return view('indicacoes-controle', $data);
     }
 
     public function salva($request) {
@@ -96,8 +117,14 @@ class IndicacoesControleController extends Controller
         if($request->input('id')) {
             $indicacoes = $indicacoes::find($request->input('id'));
         }
-
+        dd($request->input());
         $indicacoes->nome = $request->input('nome');
+        $indicacoes->user_id = $request->input('user_id');
+        $indicacoes->status_indicacao_id = $request->input('status_indicacao_id');
+        $indicacoes->codigo_indicacao = $request->input('codigo_indicacao');
+        $indicacoes->valor = $request->input('valor');
+        $indicacoes->status = $request->input('status');
+        $indicacoes->observacao = $request->input('observacao');
 
         $indicacoes->save();
 

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Pro Effect')
+@section('title', 'OftalClass')
 
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script src="js/jquery.mask.js"></script>
@@ -21,9 +21,6 @@
     @section('content_header')
     <div class="form-group row">
         <h1 class="m-0 text-dark col-sm-11 col-form-label">Consulta de Indicações e cashbacks</h1>
-        <div class="col-sm-1">
-            @include('layouts.nav-open-incluir', ['rotaIncluir => $rotaIncluir'])
-        </div>
     </div>
     @stop
     @section('content')
@@ -101,7 +98,80 @@
 
     @stop
 @else
-@section('content')
+    @section('content')
+        @if($tela == 'alterar')
+            @section('content_header')
+                <h1 class="m-0 text-dark">Alteração de {{ $nome_tela }}</h1>
+            @stop
+            <form id="alterar" action="{{$rotaAlterar}}" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" method="post">
+            <div class="form-group row">
+                <label for="codigo" class="col-sm-2 col-form-label text-right">Código de indicação</label>
+                <div class="col-sm-2">
+                <input type="text" id="id" name="id" class="form-control col-md-7 col-xs-12" readonly="true" value="@if (isset($indicacoes->user_id)){{$indicacoes->user_id}}@else{{''}}@endif">
+                </div>
+            </div>
+        @else
+            @section('content_header')
+                <h1 class="m-0 text-dark">Inclusão de {{ $nome_tela }}</h1>
+            @stop
+            <form id="incluir" action="{{$rotaIncluir}}" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" method="post">
+        @endif
+            @csrf <!--{{ csrf_field() }}-->
+            <div class="form-group row">
+                <label for="data_indicacao" class="col-sm-2 col-form-label text-right">Data indicação</label>
+                <div class="col-sm-3">
+                    <input type="date" id="data_indicacao" name="data_indicacao" class="form-control col-md-7 col-xs-12" value="@if (isset($indicacoes->created_at)){{$indicacoes->created_at->format('Y-m-d')}}@else{{''}}@endif">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="nome" class="col-sm-2 col-form-label text-right">Nome</label>
+                <div class="col-sm-6">
+                <input type="text" class="form-control" id="nome"  name="nome" value="@if (isset($indicacoes->user_name)){{$indicacoes->user_name}}@else{{''}}@endif">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="valor" class="col-sm-2 col-form-label text-right">Valor</label>
+                <div class="col-sm-2">
+                    <input type="text" id="valor" name="valor" class="form-control col-md-7 col-xs-12" value="@if (isset($indicacoes->valor)){{number_format($indicacoes->valor, 2, ',', '.')}}@else{{''}}@endif">
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label for="status_indicacao_id" class="col-sm-2 col-form-label text-right">Status pagamento</label>
+                <div class="col-sm-2">
+                    <select class="form-control col-md-12" id="status_indicacao_id" name="status_indicacao_id">
+                        <option value="" @if (isset($indicacoes->status_indicacao_id) && $indicacoes->status_indicacao_id == ''){{ ' selected '}}@else @endif>Selecione</option>
+                        <option value="1" @if (isset($indicacoes->status_indicacao_id) && $indicacoes->status_indicacao_id == '1'){{ ' selected '}}@else @endif>Pendente</option>
+                        <option value="2" @if (isset($indicacoes->status_indicacao_id) && $indicacoes->status_indicacao_id == '2'){{ ' selected '}}@else @endif>Pago</option>
+                    </select>
+                </div>
+            </div>
+             <div class="form-group row">
+                <label for="observacao" class="col-sm-2 col-form-label text-right">Observação</label>
+                <div class="col-sm-6">
+                    <textarea id="observacao" name="observacao" class="form-control col-md-7 col-xs-12">@if (isset($indicacoes->observacao)){{$indicacoes->observacao}}@else{{''}}@endif</textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="status" class="col-sm-2 col-form-label text-right">Status</label>
+                <div class="col-sm-1">
+                    <select class="form-control col-md-12" id="status" name="status">
+                        <option value="A" @if (isset($indicacoes->status) && $indicacoes->status == 'A'){{ ' selected '}}@else @endif>Ativo</option>
+                        <option value="I" @if (isset($indicacoes->status) && $indicacoes->status =='I'){{ ' selected '}}@else @endif>Inativo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-5">
+                    <button class="btn btn-danger" onclick="window.history.back();" type="button">Cancelar</button>
+                </div>
+                <div class="col-sm-5">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </form>
 
     @stop
 @endif

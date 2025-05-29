@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Indicacoes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Str;
 
 class IndicacoesController extends Controller
@@ -26,22 +27,16 @@ class IndicacoesController extends Controller
      */
     public function index(Request $request)
     {
-        $indicacoes = new Indicacoes();
 
-        $id = !empty($request->input('id')) ? ($request->input('id')) : ( !empty($id) ? $id : false );
-
-        if ($id) {
-            $indicacoes = $indicacoes->where('id', '=', $id);
-        }
-
-        if ($request->input('nome') != '') {
-        	$indicacoes = $indicacoes->where('nome', 'like', '%'.$request->input('nome').'%');
-        }
-
-        $logged_user = \Auth::user();
+        $logged_user = Auth::user();
         $logged_user_id = $logged_user->id;
-        $logged_user_name = $logged_user->name;
-        $codigo_indicacao = $logged_user_id;
+
+        $indicacoes = new Indicacoes();
+        $indicacoes = $indicacoes->join('users', 'indicacoes.user_id', '=', 'users.id')
+            ->join('status_indicacao', 'indicacoes.status_indicacao_id', '=', 'status_indicacao.id')
+            ->select('indicacoes.*', 'users.name as user_name', 'status_indicacao.nome as status_nome');
+
+        $indicacoes = $indicacoes->where('user_id', '=', $logged_user_id);
         $url_do_site = env('APP_URL');
 
         $indicacoes = $indicacoes->get();
@@ -49,8 +44,8 @@ class IndicacoesController extends Controller
     	$data = array(
 				'tela' => $tela,
                 'nome_tela' => 'indicações',
-                'link' => $url_do_site.'/indicacoes/'.$logged_user_name.'/'.$logged_user_id,
-                'codigo_indicacao' => $codigo_indicacao,
+                'link' => $url_do_site.'/register?codigo='.$logged_user_id,
+                'codigo_indicacao' => $logged_user_id,
 				'indicacoes'=> $indicacoes,
 				'request' => $request,
 				'rotaIncluir' => 'incluir-indicacoes',
@@ -67,7 +62,7 @@ class IndicacoesController extends Controller
      */
     public function incluir(Request $request)
     {
-        
+
     }
 
      /**
@@ -77,7 +72,7 @@ class IndicacoesController extends Controller
      */
     public function alterar(Request $request)
     {
-        
+
     }
 
     public function salva($request) {
@@ -91,7 +86,7 @@ class IndicacoesController extends Controller
 
         $indicacoes->save();
 
-        
+
         return $indicacoes->id;
 
     }

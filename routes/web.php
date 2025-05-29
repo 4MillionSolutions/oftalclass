@@ -15,8 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('site');
 });
+Route::get('/site', [App\Http\Controllers\SiteController::class, 'index'])->name('site');
 
 Auth::routes(['register' => true, 'reset' => false]);
 

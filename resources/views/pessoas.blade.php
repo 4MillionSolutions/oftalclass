@@ -32,15 +32,15 @@
     <div class="right_col" role="main">
         <form id="filtro" action="pessoas" method="get" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
             <div class="form-group row">
-                <label for="nome" class="col-sm-2 col-form-label">Nome pessoa</label>
+                <label for="nome" class="col-sm-2 col-form-label text-right">Nome pessoa</label>
                 <div class="col-sm-3">
                     <input type="text" id="nome" name="nome" class="form-control" value="{{ $request->input('nome') ?? '' }}">
                 </div>
-                <label for="documento" class="col-sm-1 col-form-label">CPF</label>
+                <label for="documento" class="col-sm-1 col-form-label text-right">CPF</label>
                 <div class="col-sm-2">
                     <input type="text" id="documento" name="documento" class="form-control mask_cpf_cnpj" value="{{ $request->input('documento') ?? '' }}">
                 </div>
-                <label for="status" class="col-sm-1 col-form-label">Situação</label>
+                <label for="status" class="col-sm-1 col-form-label text-right">Situação</label>
                 <div class="col-sm-2">
                     <select class="form-control" id="status" name="status">
                         <option value="A" {{ $request->input('status') == 'A' ? 'selected' : '' }}>Ativo</option>
@@ -98,13 +98,18 @@
     </div>
 @else
     <h1 class="m-0 text-dark">{{ $tela == 'alterar' ? 'Alteração de' : 'Inclusão de' }} {{ $nome_tela }}</h1>
+
+
     <form id="{{ $tela }}" action="{{ $tela == 'alterar' ? $rotaAlterar : $rotaIncluir }}" method="post">
         @csrf
+        @if($tela == 'alterar')
+            <input type="hidden" name="id" value="{{ $pessoas[0]->id ?? '' }}">
+        @endif
         <div class="container">
             <div class="row row-cols-md-3 g-3">
                 <div class="col-md-4">
                     <label for="pessoa" class="form-label">Nome*</label>
-                    <input type="text" class="form-control" id="nome" name="nome" maxlength="200" required value="{{ $pessoas[0]->nome ?? '' }}">
+                    <input type="text" class="form-control" id="nome" name="nome" maxlength="200" required value="{{ $pessoas[0]->name ?? '' }}">
                 </div>
                 <div class="col-md-4">
                     <label for="documento" class="form-label">CPF*</label>
@@ -117,6 +122,10 @@
                 </div>
             </div>
             <div class="row row-cols-md-3 g-3 mt-2">
+                <div class="col-md-4">
+                    <label for="chave_pix" class="form-label" title="Seu pix para depósitos de cashback">Seu pix</label>
+                    <input type="text" class="form-control" id="chave_pix" name="chave_pix" maxlength="11" value="{{ $pessoas[0]->chave_pix ?? '' }}">
+                </div>
                 <div class="col-md-2">
                     <label for="data_nascimento" class="form-label">Data de Nascimento</label>
                     <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" value="{{ $pessoas[0]->data_nascimento ?? '' }}">
@@ -124,6 +133,7 @@
                 <div class="col-md-2">
                     <label for="genero" class="form-label">Gênero</label>
                     <select class="form-control" id="genero" name="genero">
+                        <option value="" {{ !isset($pessoas[0]->genero) ? 'selected' : '' }}>Selecione</option>
                         <option value="0" {{ isset($pessoas[0]->genero) && $pessoas[0]->genero == '0' ? 'selected' : '' }}>Masculino</option>
                         <option value="1" {{ isset($pessoas[0]->genero) && $pessoas[0]->genero == '1' ? 'selected' : '' }}>Feminino</option>
                         <option value="2" {{ isset($pessoas[0]->genero) && $pessoas[0]->genero == '2' ? 'selected' : '' }}>Outro</option>
@@ -134,22 +144,6 @@
                     <input type="email" class="form-control" id="email" name="email" maxlength="200" placeholder="Digite um email válido" value="{{ $pessoas[0]->email ?? '' }}">
                 </div>
 
-            </div>
-
-            <div class="row row-cols-md-3 g-3 mt-2">
-                <div class="col-md-4">
-                    <label for="estado_civil" class="form-label">Estado civil</label>
-                    <select class="form-control" id="estado_civil" name="estado_civil">
-                        <option value="0" {{ isset($pessoas[0]->estado_civil) && $pessoas[0]->estado_civil == '0' ? 'selected' : '' }}>Solteiro(a)</option>
-                        <option value="1" {{ isset($pessoas[0]->estado_civil) && $pessoas[0]->estado_civil == '1' ? 'selected' : '' }}>Casado(a)</option>
-                        <option value="2" {{ isset($pessoas[0]->estado_civil) && $pessoas[0]->estado_civil == '2' ? 'selected' : '' }}>Divorciado(a)</option>
-                        <option value="3" {{ isset($pessoas[0]->estado_civil) && $pessoas[0]->estado_civil == '3' ? 'selected' : '' }}>Viúvo(a)</option>
-                        <option value="4" {{ isset($pessoas[0]->estado_civil) && $pessoas[0]->estado_civil == '4' ? 'selected' : '' }}>Separado(a)</option>
-                        <option value="5" {{ isset($pessoas[0]->estado_civil) && $pessoas[0]->estado_civil == '5' ? 'selected' : '' }}>União Estável</option>
-                        <option value="6" {{ isset($pessoas[0]->estado_civil) && $pessoas[0]->estado_civil == '6' ? 'selected' : '' }}>Outros</option>
-                    </select>
-
-                </div>
             </div>
 
             <div class="row row-cols-md-3 g-3 mt-2">
