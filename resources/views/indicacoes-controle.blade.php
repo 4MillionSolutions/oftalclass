@@ -30,10 +30,10 @@
         @csrf <!--{{ csrf_field() }}-->
             <form id="filtro" action="indicacoes-controle" method="get" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
             <div class="form-group row">
-                <label for="codigo_indicacao" class="col-sm-2 col-form-label text-right">Código de indicação</label>
+                {{-- <label for="codigo_indicacao" class="col-sm-2 col-form-label text-right">Código de indicação</label>
                 <div class="col-sm-1">
                     <input type="text" id="codigo_indicacao" name="codigo_indicacao" class="form-control" value="@if (isset($codigo_indicacao)){{$codigo_indicacao}}@else{{''}}@endif">
-                </div>
+                </div> --}}
                 <label for="nome" class="col-sm-1 col-form-label text-right">Nome</label>
                 <div class="col-sm-3">
                     <input type="text" id="nome" name="nome" class="form-control" value="@if (isset($request) && trim($request->input('nome')) != ''){{$request->input('nome')}}@else @endif">
@@ -76,6 +76,7 @@
                     <tr>
                         <th>Data</th>
                         <th>Nome</th>
+                        <th>Quem indicou?</th>
                         <th>Valor</th>
                         <th>Status pagamento</th>
                     </tr>
@@ -88,8 +89,9 @@
                                     {{ $indicacao->created_at->format('d/m/Y') }}
                                 </a></th>
                                 <td>{{$indicacao->user_name}}</td>
+                                <td>{{$indicacao->indicador_nome}}</td>
                                 <td>{{ number_format($indicacao->valor, 2, ',', '.') }}</td>
-                                <td>{{$indicacao->status_nome}}</td>
+                                <td class="@if($indicacao->status_id == 1) text-warning @elseif($indicacao->status_id == 2) text-success @endif text-bold">{{$indicacao->status_nome}}</td>
                             </tr>
                         @endforeach
                     @endif
@@ -104,12 +106,20 @@
                 <h1 class="m-0 text-dark">Alteração de {{ $nome_tela }}</h1>
             @stop
             <form id="alterar" action="{{$rotaAlterar}}" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" method="post">
-            <div class="form-group row">
-                <label for="codigo" class="col-sm-2 col-form-label text-right">Código de indicação</label>
-                <div class="col-sm-2">
-                <input type="text" id="id" name="id" class="form-control col-md-7 col-xs-12" readonly="true" value="@if (isset($indicacoes->user_id)){{$indicacoes->user_id}}@else{{''}}@endif">
+
+                <input type="hidden" id="id" name="id" class="form-control col-md-7 col-xs-12" value="@if (isset($indicacoes->id)){{$indicacoes->id}}@else{{''}}@endif">
+                <div class="form-group row">
+                    <label for="indicador_id" class="col-sm-2 col-form-label text-right">Código de indicação</label>
+                    <div class="col-sm-2">
+                    <input type="text" id="indicador_id" name="indicador_id" class="form-control col-md-7 col-xs-12" readonly="true" value="@if (isset($indicacoes->indicador_id)){{$indicacoes->indicador_id}}@else{{''}}@endif">
+                    </div>
                 </div>
-            </div>
+                <div class="form-group row">
+                    <label for="nome_indicador" class="col-sm-2 col-form-label text-right">Nome do indicador</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="nome_indicador" name="nome_indicador" class="form-control" readonly="true" value="@if (isset($indicacoes->indicador_nome)){{$indicacoes->indicador_nome}}@else{{''}}@endif">
+                    </div>
+                </div>
         @else
             @section('content_header')
                 <h1 class="m-0 text-dark">Inclusão de {{ $nome_tela }}</h1>
@@ -120,19 +130,19 @@
             <div class="form-group row">
                 <label for="data_indicacao" class="col-sm-2 col-form-label text-right">Data indicação</label>
                 <div class="col-sm-3">
-                    <input type="date" id="data_indicacao" name="data_indicacao" class="form-control col-md-7 col-xs-12" value="@if (isset($indicacoes->created_at)){{$indicacoes->created_at->format('Y-m-d')}}@else{{''}}@endif">
+                    <input type="date" id="data_indicacao" name="data_indicacao" class="form-control col-md-7 col-xs-12" readonly="true" value="@if (isset($indicacoes->created_at)){{$indicacoes->created_at->format('Y-m-d')}}@else{{''}}@endif">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="nome" class="col-sm-2 col-form-label text-right">Nome</label>
                 <div class="col-sm-6">
-                <input type="text" class="form-control" id="nome"  name="nome" value="@if (isset($indicacoes->user_name)){{$indicacoes->user_name}}@else{{''}}@endif">
+                <input type="text" class="form-control" id="nome"  name="nome" readonly="true" value="@if (isset($indicacoes->user_name)){{$indicacoes->user_name}}@else{{''}}@endif">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="valor" class="col-sm-2 col-form-label text-right">Valor</label>
+                <label for="valor" class="col-sm-2 col-form-label text-right ">Valor</label>
                 <div class="col-sm-2">
-                    <input type="text" id="valor" name="valor" class="form-control col-md-7 col-xs-12" value="@if (isset($indicacoes->valor)){{number_format($indicacoes->valor, 2, ',', '.')}}@else{{''}}@endif">
+                    <input type="text" id="valor" name="valor" class="form-control col-md-7 col-xs-12 mask_valor" value="@if (isset($indicacoes->valor)){{number_format($indicacoes->valor, 2, ',', '.')}}@else{{''}}@endif">
                 </div>
             </div>
 

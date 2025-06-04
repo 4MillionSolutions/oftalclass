@@ -29,7 +29,10 @@ class IndicacoesControleController extends Controller
         $indicacoes = new Indicacoes();
         $indicacoes = $indicacoes->join('users', 'indicacoes.user_id', '=', 'users.id')
         ->join('status_indicacao', 'indicacoes.status_indicacao_id', '=', 'status_indicacao.id')
-            ->select('indicacoes.*', 'users.name as user_name', 'status_indicacao.nome as status_nome');
+         ->join('users as users_indicador', 'indicacoes.codigo_indicacao', '=', 'users_indicador.id')
+            ->select('indicacoes.*', 'users.name as user_name', 'status_indicacao.nome as status_nome', 'status_indicacao.id as status_id',
+                'users_indicador.name as indicador_nome')
+            ->orderBy('indicacoes.created_at', 'desc');
 
         $id = !empty($request->input('codigo_indicacao')) ? ($request->input('codigo_indicacao')) : NULL ;
 
@@ -92,9 +95,19 @@ class IndicacoesControleController extends Controller
         if($request->input('id')) {
             $indicacoes = $indicacoes::find($request->input('id'));
         }
+
+        $metodo = $request->method();
+        if ($metodo == 'POST') {
+            $id = $this->salva($request);
+            return redirect()->route('indicacoes-controle', [ 'id' => $id ] );
+        }
+
         $indicacoes = $indicacoes->join('users', 'indicacoes.user_id', '=', 'users.id')
             ->join('status_indicacao', 'indicacoes.status_indicacao_id', '=', 'status_indicacao.id')
-            ->select('indicacoes.*', 'users.name as user_name', 'users.id as user_id', 'status_indicacao.nome as status_nome')
+            ->join('users as users_indicador', 'indicacoes.codigo_indicacao', '=', 'users_indicador.id')
+            ->select('indicacoes.*', 'users.name as user_name', 'users.id as user_id', 'status_indicacao.nome as status_nome',
+                'users_indicador.name as indicador_nome', 'users_indicador.id as indicador_id')
+
             ->where('indicacoes.id', '=', $request->input('id'))
             ->first();
 
@@ -117,12 +130,11 @@ class IndicacoesControleController extends Controller
         if($request->input('id')) {
             $indicacoes = $indicacoes::find($request->input('id'));
         }
-        dd($request->input());
-        $indicacoes->nome = $request->input('nome');
-        $indicacoes->user_id = $request->input('user_id');
+        $helpers = new DateHelpers();
+        // dd($request->input());
+
         $indicacoes->status_indicacao_id = $request->input('status_indicacao_id');
-        $indicacoes->codigo_indicacao = $request->input('codigo_indicacao');
-        $indicacoes->valor = $request->input('valor');
+        $indicacoes->valor = $helpers::formatFloatValue($request->input('valor'));
         $indicacoes->status = $request->input('status');
         $indicacoes->observacao = $request->input('observacao');
 
