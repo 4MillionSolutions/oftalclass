@@ -45,7 +45,7 @@
 
 $(function ($) {
 
-   
+
     //var baseUrl = '/proeffect/public'
     var baseUrl = ''
 
@@ -83,7 +83,7 @@ $(function ($) {
     } else {
         console.log("Select2 não está carregado!");
     }
-    
+
     var validacao_cpf_cnpj = function (val) {
         return val.replace(/\D/g, '').length === 11 ? '000.000.000-00' : '00.000.000/0000-00';
     },
@@ -94,12 +94,12 @@ $(function ($) {
         reverse: true,
         clearIfNotMatch: true
     };
-    
+
     $('.mask_cpf_cnpj').mask(validacao_cpf_cnpj, options);
 
     $('.toast').hide();
 
-    
+
 
     $(document).on("focus", ".mask_valor", function() {
         $(this).mask('###.###.##0,00', {reverse: true});
@@ -108,7 +108,7 @@ $(function ($) {
         $(this).mask('00/00/0000');
      });
 
-    
+
     function abreAlertSuccess(texto, erro) {
         if(erro) {
             $('.toast').addClass('bg-danger')
@@ -124,21 +124,21 @@ $(function ($) {
 
     function validarCPF(cpf) {
         cpf = cpf.replace(/[^\d]/g, '');
-        
+
         if (cpf.length !== 11) return false;
-        
+
         if (/^(\d)\1+$/.test(cpf)) return false;
-        
+
         let soma = 0;
         let resto;
-        
+
         for (let i = 1; i <= 9; i++) {
             soma = soma + parseInt(cpf.substring(i-1, i)) * (11 - i);
         }
         resto = (soma * 10) % 11;
         if ((resto === 10) || (resto === 11)) resto = 0;
         if (resto !== parseInt(cpf.substring(9, 10))) return false;
-        
+
         soma = 0;
         for (let i = 1; i <= 10; i++) {
             soma = soma + parseInt(cpf.substring(i-1, i)) * (12 - i);
@@ -146,14 +146,14 @@ $(function ($) {
         resto = (soma * 10) % 11;
         if ((resto === 10) || (resto === 11)) resto = 0;
         if (resto !== parseInt(cpf.substring(10, 11))) return false;
-        
+
         return true;
     }
 
     $(document).on('blur', '.mask_cpf_cnpj', function() {
         const cpf = $(this).val();
         const errorElement = $('#documento-error');
-        
+
         if (!validarCPF(cpf)) {
             errorElement.show();
             $(this).addClass('is-invalid');
@@ -163,7 +163,7 @@ $(function ($) {
         }
     });
 
-    
+
 
 });
 
@@ -172,11 +172,20 @@ function compartilharLink() {
     const codigo = document.getElementById('codigo_indicacao').value;
 
     const texto = encodeURIComponent(
-        `Ganhe cashback nas suas compras na OftalClass! \n\nAcesse agora! Se cadastre e aproveite essa vantagem exclusiva:\n${url}\n\nUse o código *${codigo}* no dia da compra e receba seu cashback!`
+        `Ganhe cashback nas suas compras na OftalClass!\n\n` +
+        `Acesse agora! Se cadastre e aproveite essa vantagem exclusiva:\n` +
+        `${url}\n\n` +
+        `Use o código *${codigo}* no dia da compra e receba seu cashback!`
     );
 
-    const whatsappUrl = `https://wa.me/?text=${texto}`;
+    // Detecta se é um dispositivo móvel
+    const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+    // Define a URL de compartilhamento
+    const whatsappUrl = isMobile
+        ? `https://wa.me/?text=${texto}`
+        : `https://web.whatsapp.com/send?text=${texto}`;
+
     window.open(whatsappUrl, '_blank');
 }
-
 
