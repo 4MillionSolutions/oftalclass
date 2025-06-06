@@ -172,10 +172,11 @@ function compartilharLink() {
     const codigo = document.getElementById('codigo_indicacao').value;
 
     const texto = encodeURIComponent(
-        `Ganhe cashback nas suas compras na OftalClass!\n\n` +
-        `Acesse agora! Se cadastre e aproveite essa vantagem exclusiva:\n` +
-        `${url}\n\n` +
-        `Use o código *${codigo}* no dia da compra e receba seu cashback!`
+        `Ganhe desconto na OftalClass e ajude um amigo a receber cashback!\n\n` +
+        `Você recebeu um link com benefício exclusivo!\n\n` +
+        `Use o código *${codigo}* na hora da compra e ganhe desconto em seus produtos.\n\n` +
+        `Cadastre-se agora e aproveite:\n` +
+        `${url}\n\n`
     );
 
     // Detecta se é um dispositivo móvel
