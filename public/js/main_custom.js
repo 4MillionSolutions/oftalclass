@@ -175,7 +175,7 @@ function compartilharLink() {
         `Ganhe desconto na OftalClass!\n\n` +
         `Você recebeu um link com benefício exclusivo!\n\n` +
         `Use o código *${codigo}* na hora da compra e ganhe desconto em seus produtos.\n\n` +
-        `Cadastre-se agora e aproveite:\n` +
+        `Cadastre-se agora e ganhe cashback compartilhando seu link com seus amigos. Aproveite!\n` +
         `${url}`
     );
 
