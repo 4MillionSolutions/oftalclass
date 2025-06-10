@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('codigo_indicacao', 10);
             $table->float('valor')->default(0);
             $table->string('status', 1)->default('A');
-            $table->string('observacao')->nullable();
+            $table->text('observacao')->nullable();
             $table->timestamps();
         });
 
