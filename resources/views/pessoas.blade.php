@@ -124,7 +124,7 @@
             <div class="row row-cols-md-3 g-3 mt-2">
                 <div class="col-md-4">
                     <label for="chave_pix" class="form-label" title="Seu pix para depósitos de cashback">Seu pix</label>
-                    <input type="text" class="form-control" id="chave_pix" name="chave_pix" maxlength="11" value="{{ $pessoas[0]->chave_pix ?? '' }}">
+                    <input type="text" class="form-control" id="chave_pix" name="chave_pix" maxlength="100" value="{{ $pessoas[0]->chave_pix ?? '' }}">
                 </div>
                 <div class="col-md-2">
                     <label for="data_nascimento" class="form-label">Data de Nascimento</label>
