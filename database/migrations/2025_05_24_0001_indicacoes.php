@@ -26,16 +26,16 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::table('indicacoes')->insert(
-            [
-                [ 'user_id' => 1, 'status_indicacao_id' => 2, 'codigo_indicacao' => 1, 'valor' => 10.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
-                [ 'user_id' => 1, 'status_indicacao_id' => 1, 'codigo_indicacao' => 1, 'valor' => 5.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
-                [ 'user_id' => 1, 'status_indicacao_id' => 1, 'codigo_indicacao' => 1, 'valor' => 15.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
-                [ 'user_id' => 2, 'status_indicacao_id' => 2, 'codigo_indicacao' => 2, 'valor' => 20.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
-                [ 'user_id' => 3, 'status_indicacao_id' => 1, 'codigo_indicacao' => 3, 'valor' => 15.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
-                [ 'user_id' => 1, 'status_indicacao_id' => 2, 'codigo_indicacao' => 4, 'valor' => 30.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
-            ]
-        );
+        // DB::table('indicacoes')->insert(
+        //     [
+        //         [ 'user_id' => 1, 'status_indicacao_id' => 2, 'codigo_indicacao' => 1, 'valor' => 10.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
+        //         [ 'user_id' => 1, 'status_indicacao_id' => 1, 'codigo_indicacao' => 1, 'valor' => 5.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
+        //         [ 'user_id' => 1, 'status_indicacao_id' => 1, 'codigo_indicacao' => 1, 'valor' => 15.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
+        //         [ 'user_id' => 2, 'status_indicacao_id' => 2, 'codigo_indicacao' => 2, 'valor' => 20.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
+        //         [ 'user_id' => 3, 'status_indicacao_id' => 1, 'codigo_indicacao' => 3, 'valor' => 15.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
+        //         [ 'user_id' => 1, 'status_indicacao_id' => 2, 'codigo_indicacao' => 4, 'valor' => 30.00, 'status' => 'A', 'created_at' => now(), 'updated_at' => now()],
+        //     ]
+        // );
 
     }
 
