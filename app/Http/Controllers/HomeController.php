@@ -31,7 +31,8 @@ class HomeController extends Controller
         $indicacoes = new Indicacoes();
         $indicacoes = $indicacoes->join('users', 'indicacoes.user_id', '=', 'users.id')
             ->join('status_indicacao', 'indicacoes.status_indicacao_id', '=', 'status_indicacao.id')
-            ->select('indicacoes.*', 'users.name as user_name', 'status_indicacao.nome as status_nome');
+            ->select('indicacoes.*', 'users.name as user_name', 'status_indicacao.nome as status_nome',
+            'users.chave_pix as chave_pix');
 
         $indicacoes = $indicacoes->where('user_id', '=', $logged_user_id);
         $url_do_site = env('APP_URL');
@@ -40,6 +41,7 @@ class HomeController extends Controller
     	$data = array(
                 'link' => $url_do_site.'/register?codigo='.$logged_user_id,
                 'codigo_indicacao' => $logged_user_id,
+                'indicacoes' => $indicacoes
         );
 
         return view('home', $data );

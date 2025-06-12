@@ -34,7 +34,8 @@ class IndicacoesController extends Controller
         $indicacoes = new Indicacoes();
         $indicacoes = $indicacoes->join('users', 'indicacoes.user_id', '=', 'users.id')
             ->join('status_indicacao', 'indicacoes.status_indicacao_id', '=', 'status_indicacao.id')
-            ->select('indicacoes.*', 'users.name as user_name', 'status_indicacao.nome as status_nome');
+            ->select('indicacoes.*', 'users.name as user_name', 'status_indicacao.nome as status_nome',
+                    'users.chave_pix as chave_pix');
 
         $indicacoes = $indicacoes->where('user_id', '=', $logged_user_id);
         $url_do_site = env('APP_URL');

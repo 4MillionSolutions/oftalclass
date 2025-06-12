@@ -27,7 +27,7 @@
     <div class="right_col" role="main">
 
         @csrf <!--{{ csrf_field() }}-->
-         @if(!empty($user->chave_pix))
+         @if(!empty($indicacoes[0]->chave_pix))
             <div class="form-group row">
                 <label for="link" class="col-sm-2 col-form-label  text-right">Link de indicação</label>
                 <div class="col-sm-6">

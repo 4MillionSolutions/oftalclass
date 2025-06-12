@@ -27,6 +27,7 @@
 
 
 <div class="form-group row">
+    @if(!empty($indicacoes[0]->chave_pix))
             <label for="link" class="col-sm-2 col-form-label  text-right">Link de indicação</label>
                 <div class="col-sm-6">
                     <input type="text" id="link" name="link" class="form-control col-md-7 col-xs-12" readonly="true" value="@if (isset($link)){{$link}}@else{{''}}@endif">
@@ -45,5 +46,11 @@
                     </button>
                 </div>
             </div>
+        @else
+        {{-- link para cadastro na rota admin/settings --}}
+        <a href="{{ route('settings') }}" class="btn btn-primary mb-3">
+            <i class="fas fa-cog"></i> Cadastre seu Pix para poder compartilhar
+        </a>
+    @endif
     </div>
 @stop
