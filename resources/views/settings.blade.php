@@ -8,9 +8,10 @@
             <h1 class="m-0 text-dark col-sm-11 col-form-label">Conta</h1>
         </div>
 
-    <script src="../vendor/jquery/jquery.min.js?cache={{time()}}"></script>
-    <script src="../js/jquery.mask.js?cache={{time()}}"></script>
-    <script src="{{ asset('js/main_custom.js') }}"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../js/jquery.mask.js"></script>
+    <script src="../js/bootstrap.4.6.2.js"></script>
+    <script src="../js/main_custom.js"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 @stop
@@ -30,6 +31,26 @@
                 @csrf
                 <input type="hidden" name="id" value="{{ $user->id ?? '' }}">
                 <div class="container">
+                    @if(!empty($user->chave_pix))
+                        <div class="row row-cols-md-3 g-3">
+                            <div class="col-md-4">
+                                <label for="link" class="col-form-label  text-right">Link de indicação</label>
+                                <input type="text" id="link" name="link" class="form-control col-md-12 col-xs-12" readonly="true" value="@if (isset($user->link)){{$user->link}}@else{{''}}@endif">
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label for="codigo_indicacao" class="col-form-label  text-right">Código de indicação</label>
+                                <input type="text" id="codigo_indicacao" name="codigo_indicacao" class="form-control col-md-7 col-xs-12" readonly="true" value="@if (isset($user->codigo_indicacao)){{$user->codigo_indicacao}}@else{{''}}@endif">
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label for="compartilhar" class="col-form-label text-right">Compartilhe com seu amigos e familiares</label>
+                                <button type="button" class="btn btn-success" id="compartilhar" onclick="compartilharLink()">
+                                    <i class="fas fa-share"></i> Compartilhar
+                                </button>
+                            </div>
+                        </div>
+                    @endif
                     <div class="row row-cols-md-3 g-3">
                         <div class="col-md-4">
                             <label for="pessoa" class="form-label">Nome*</label>
@@ -37,7 +58,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="documento" class="form-label">CPF*</label>
-                            <input type="text" class="form-control mask_cpf_cnpj" id="documento" name="documento" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" required placeholder="000.000.000-00" value="{{ $user->documento ?? '' }}" >
+                            <input type="text" class="form-control mask_cpf_cnpj" id="documento" name="documento" maxlength="14" required placeholder="000.000.000-00" value="{{ $user->documento ?? '' }}" >
                             <small id="cpf-error" class="text-danger" style="display:none;">CPF inválido</small>
                         </div>
                         <div class="col-md-4">
@@ -47,8 +68,8 @@
                     </div>
                     <div class="row row-cols-md-3 g-3 mt-2">
                         <div class="col-md-4">
-                            <label for="chave_pix" class="form-label" title="Seu pix para depósitos de cashback">Seu pix</label>
-                            <input type="text" class="form-control" id="chave_pix" name="chave_pix" maxlength="11" value="{{ $user->chave_pix ?? '' }}">
+                            <label for="chave_pix" class="form-label text-danger" title="Seu pix para depósitos de cashback">Seu pix</label>
+                            <input type="text" class="form-control" id="chave_pix" name="chave_pix" maxlength="100" value="{{ $user->chave_pix ?? '' }}">
                         </div>
                         <div class="col-md-2">
                             <label for="data_nascimento" class="form-label">Data de Nascimento</label>
@@ -131,6 +152,7 @@
                         </div>
                     </div>
 
+                    </div>
                     <div class="row mt-4 text-center">
                         <div class="col-md-12">
                             <button class="btn btn-danger mx-2" onclick="window.history.back();" type="button">Cancelar</button>

@@ -172,10 +172,13 @@ function compartilharLink() {
     const codigo = document.getElementById('codigo_indicacao').value;
 
     const texto = encodeURIComponent(
-        `Ganhe desconto na OftalClass!\n\n` +
-        `Você recebeu um link com benefício exclusivo!\n\n` +
-        `Use o código *${codigo}* na hora da compra e ganhe desconto em seus produtos.\n\n` +
-        `Cadastre-se agora e ganhe cashback compartilhando o link com seus amigos. Aproveite!\n` +
+        `Ganhe descontos na compra de óculos e lente de contato na ÓTICA OFTALCLASS.\n`+
+        `Apresente o código *${codigo}*  na hora da compra.\n\n`+
+        `Ganhe com a compra dos amigos, cadastre seu PIX.\n\n`+
+        // `Ganhe desconto na OftalClass!\n\n` +
+        // `Você recebeu um link com benefício exclusivo!\n\n` +
+        // `Use o código *${codigo}* na hora da compra e ganhe desconto em seus produtos.\n\n` +
+        // `Cadastre-se agora e ganhe cashback compartilhando o link com seus amigos. Aproveite!\n` +
         `${url}`
     );
 
