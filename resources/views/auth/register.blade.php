@@ -14,6 +14,7 @@
         {{-- Campos padrão --}}
         <x-adminlte-input name="name" label="Nome" required fgroup-class="mb-3"/>
         <x-adminlte-input name="email" label="E-mail" type="email" required fgroup-class="mb-3"/>
+        <x-adminlte-input name="chave_pix" label="Chave PIX" type="text" required fgroup-class="mb-3"/>
         <x-adminlte-input name="password" label="Senha" type="password" required fgroup-class="mb-3"/>
         <x-adminlte-input name="password_confirmation" label="Confirme a senha" type="password" required fgroup-class="mb-3"/>
 
