@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 Route::get('/site', [App\Http\Controllers\SiteController::class, 'index'])->name('site');
 
-Auth::routes(['register' => true, 'reset' => false]);
+Auth::routes(['register' => true, 'reset' => true]);
 
 Route::match(['get', 'post'],'/perfis', [App\Http\Controllers\PerfisController::class, 'index'])->name('perfis')->middleware('afterAuth:perfis');
 Route::match(['get', 'post'],'/alterar-perfis', [App\Http\Controllers\PerfisController::class, 'alterar'])->name('alterar-perfis')->middleware('afterAuth:perfis');
