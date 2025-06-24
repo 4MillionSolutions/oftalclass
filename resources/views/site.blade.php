@@ -130,8 +130,8 @@
     <div class="container">
       <h2>Indicações</h2>
       <ul class="list-unstyled">
-        <li>Cadastre-se, nos indique e ganhe cashback!</li>   
-        <a href="/indicacoes" class="btn btn-orange text-white mt-3">Indicar</a>  
+        <li>Cadastre-se, nos indique e ganhe cashback!</li>
+        <a href="/indicacoes" class="btn btn-orange text-white mt-3">Indicar</a>
 
       </ul>
     </div>
@@ -140,15 +140,16 @@
   <section class="hero" id="login">
     <div class="container">
       <h2>Entre em contato!</h2>
-      <p class="lead">Estamos na rua </p>
-      <p class="lead">Telefones:(11) 3549-5622 </p>
-      <p class="lead">Telefones:(11) 99858-1585 
+      <p class="lead">Estamos na rua:</p>
+      <p class="lead">Rua Washington Luis, nº 1518, Sertãozinho-SP</p>
+      <p class="lead">Telefones:(16) 99116-2965 </p>
+      <p class="lead">Telefones:(16) 3942 6127</p>
       {{-- Link do whatssApp  --}}
-      <a href="https://api.whatsapp.com/send?phone=5511999999999" target="_blank"><i class="fab fa-whatsapp text-success"></i> </a>
-        
-      </p> 
+      <a href="https://api.whatsapp.com/send?phone=5516991162965" target="_blank"><i class="fab fa-whatsapp text-success"></i> </a>
 
-      
+      </p>
+
+
     </div>
   </section>
 
